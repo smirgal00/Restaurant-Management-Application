@@ -1,37 +1,43 @@
 package org.GUI;
 
+import Business.BaseProduct;
+import Business.CompositeProduct;
+import Business.MenuItem;
+import Business.Restaurant;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
 /**
- * JavaFX App
+ * Main class for executing the application
  */
+
 public class App extends Application {
 
     private static Scene scene;
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("primary"), 640, 480);
+        stage.setTitle("Restaurant!");
         stage.setScene(scene);
         stage.show();
     }
 
-    static void setRoot(String fxml) throws IOException {
-        scene.setRoot(loadFXML(fxml));
-    }
-
-    private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/org/openjfx/" + fxml + ".fxml"));
-        return fxmlLoader.load();
-    }
-
     public static void main(String[] args) {
+
+        Restaurant restaurant = new Restaurant();
+
+        CompositeProduct compositeProduct = new CompositeProduct("Ciorba");
+        compositeProduct.addItem(new BaseProduct("carne", 5.0));
+        compositeProduct.addItem(new BaseProduct("apa", 1.0));
+
+        restaurant.addMenuItem(compositeProduct);
+        restaurant.addMenuItem(compositeProduct);
+
+        restaurant.printMenu();
+
         launch();
     }
 
