@@ -17,6 +17,7 @@ public class Order {
     public int hashCode() {
         return (ID + date.hashCode() + table);
     }
+    
     public void setID(Integer ID) {
         this.ID = ID;
     }

@@ -1,87 +1,78 @@
 package Business;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
-import java.util.concurrent.CompletionService;
 
 public class Restaurant implements IRestaurantProcessing {
 
-    List<CompositeProduct> menu;
+    private List<MenuItem> menu;
 
     public Restaurant() {
         menu = new ArrayList<>();
     }
 
     @Override
-    public void addMenuItem(CompositeProduct item) {
-        assert item != null;
-        assert menu != null;
-
-        menu.add(item);
-
-        assert menu.contains(item);
-    }
-
-    @Override
-    public void deleteMenuItem(CompositeProduct item) {
-        assert item != null;
-        assert menu != null;
-
-        menu.remove(item);
-
-        assert !menu.contains(item);
-    }
-
-    @Override
-    public void editItem(CompositeProduct item, CompositeProduct newItem) {
-        assert item != null;
-        assert newItem != null;
-        assert !menu.isEmpty();
+    public void createItem(List<MenuItem> components, String name) {
+        assert components.size() != 0 : "The list of components is empty! Function: createItem from Restaurant class";
+        assert name != null;
 
         int size = menu.size();
 
-        menu.set(menu.indexOf(item), newItem);
-
-        assert size == menu.size();
-    }
-
-    @Override
-    public void addItemToProduct(BaseProduct item, CompositeProduct product) {
-        assert item != null;
-        assert product != null;
-        assert menu.size() != 0;
-
-        int size = menu.size();
-
-        for(CompositeProduct compositeProduct : menu) {
-            if(compositeProduct.equals(product)) {
-                compositeProduct.addItem(item);
-            }
+        MenuItem temp = new CompositeProduct(name);
+        for(MenuItem menuItem : components) {
+            temp.addItem(menuItem);
         }
 
-        assert size == menu.size();
+        menu.add(temp);
+
+        assert menu.size() == size + 1;
     }
 
     @Override
-    public Order createOrder(Integer ID, Date date, Integer table) {
-        return null;
+    public void deleteItem(String name) {
+
+        assert name != null;
+
+        Iterator<MenuItem> iterator = menu.iterator();
+
+        while(iterator.hasNext()) {
+            MenuItem menuItem = iterator.next();
+
+            if(menuItem.getName().equals(name)) {
+                menu.remove(menuItem);
+            }
+        }
     }
 
     @Override
-    public Double computePrice(Order order) {
-        return null;
+    public void editMenuItem(List<MenuItem> components, String name) {
+        assert components.size() != 0;
+        assert name != null;
+
+        for(MenuItem menuItem : menu) {
+            String[] split= menuItem.getName().split("\n");
+            if(split[0].equals(name)) {
+                for(MenuItem comp : components) {
+                    menuItem.addItem(comp);
+                }
+            }
+        }
     }
 
     @Override
-    public void generateBill(Order order, Double price) {
+    public void editMenuItem(MenuItem component, MenuItem newComponent) {
+        assert component != null;
+        assert newComponent != null;
 
+        for(MenuItem menuItem : menu) {
+           menuItem.editItem(newComponent);
+        }
     }
 
-    @Override
-    public void printMenu() {
-        for(CompositeProduct compositeProduct : menu) {
-            System.out.println(compositeProduct.printProduct());
+    public void printMenuItems() {
+        for(MenuItem menuItem : menu) {
+            System.out.println(menuItem.getName() + " Price: " + menuItem.computePrice());
         }
     }
 }

@@ -1,55 +1,42 @@
 package Business;
 
-import java.util.Date;
 import java.util.List;
 
 public interface IRestaurantProcessing {
 
     /**
-     * Adds given item to given menu
-     * @pre item != null
-     * @param item Item to be added to the menu
+     * Creates a new menu item based on the list of ingredients provided as a parameter
+     *
+     * @pre components.size() != 0
+     * @pre name != null
+     * @param components Ingredients of menu item
+     * @param name Name of menu item
      */
-    void addMenuItem(CompositeProduct item);
+    void createItem(List<MenuItem> components, String name);
 
     /**
-     * Deletes given item from given menu
-     * @pre item != null
-     * @param item Item to be deleted from menu
+     * Deletes an item from the given menu
+     *
+     * @pre name != null
+     * @param name The item that will be deleted
      */
-    void deleteMenuItem(CompositeProduct item);
+    void deleteItem(String name);
 
     /**
-     * Searches for the given item and modifies it with its new attributes
-     * @pre item != null
-     * @pre newItem != null
-     * @param item Item to be modified
-     * @param newItem The item with new values changed
+     * Searches for the given product name as a parameter and adds base products to it
+     *
+     * @pre components.size() != 0
+     * @pre name != null
+     * @param components New base products an item contains
+     * @param name Name of the product to be edited
      */
-    void editItem(CompositeProduct item, CompositeProduct newItem);
+    void editMenuItem(List<MenuItem> components, String name);
 
     /**
-     * Searches for a product in the menu and adds a new item in it
-     * @pre item != null
-     * @pre product != null
-     * @param item Item to be added to a product
-     * @param product Product to be edited
+     * Searches for all the products that contain the given component and changes their details
+     * @pre component != null
+     * @pre newComponent != null
+     * @param component components that needs to be edited
      */
-    void addItemToProduct(BaseProduct item, CompositeProduct product);
-
-    /**
-     * Creates and returns an order with given parameters
-     * @post returns != null
-     * @param ID Order ID
-     * @param date Date of order
-     * @param table Table
-     * @return Order that was created
-     */
-    Order createOrder(Integer ID, Date date, Integer table);
-
-    Double computePrice(Order order);
-
-    void generateBill(Order order, Double price);
-
-    void printMenu();
+    void editMenuItem(MenuItem component, MenuItem newComponent);
 }

@@ -3,52 +3,57 @@ package Business;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CompositeProduct implements MenuItem {
+public class CompositeProduct extends MenuItem {
     private final String name;
-
-    List<BaseProduct> items;
+    private List<MenuItem> product;
 
     public CompositeProduct(String name) {
         this.name = name;
-        this.items = new ArrayList<>();
+        product = new ArrayList<>();
+    }
+
+    public CompositeProduct(String name, List<MenuItem> product) {
+        this.name = name;
+        this.product = product;
     }
 
     @Override
     public Double computePrice() {
         Double price = 0.0;
 
-        for(MenuItem item : items) {
-            price += item.computePrice();
+        for (MenuItem menuItem : product) {
+            price += menuItem.computePrice();
         }
 
         return price;
     }
 
     @Override
-    public boolean equals(Object product) {
-        CompositeProduct compositeProduct = (CompositeProduct) product;
-
-        return compositeProduct.getName() == this.name;
-    }
-
     public String getName() {
-        return this.name;
-    }
+        StringBuilder name = new StringBuilder(this.name + '\n');
 
-    public void addItem(BaseProduct item) {
-        if(!items.contains(item)) {
-            items.add(item);
+        for (MenuItem menuItem : product) {
+            name.append(menuItem.getName()).append(", ");
         }
 
+        name.replace(name.length() - 2, name.length(), "");
+
+        return name.toString();
     }
 
-    public String printProduct() {
-        String text = "";
-        for(BaseProduct item : items) {
-            text = text + item.getName() + ", ";
+    @Override
+    public void addItem(MenuItem menuItem) {
+        if(!product.contains(menuItem)) {
+            product.add(menuItem);
         }
-        return text;
     }
 
-
+    @Override
+    public void editItem(MenuItem menuItem) {
+        for(MenuItem menuItem1 : product) {
+            if(menuItem1.getName().equals(menuItem.getName())) {
+                menuItem1.editItem(menuItem);
+            }
+        }
+    }
 }

@@ -1,10 +1,8 @@
 package Business;
 
-import java.util.List;
-
-public class BaseProduct implements MenuItem {
-    private final String name;
-    private final Double price;
+public class BaseProduct extends MenuItem {
+    private String name;
+    private Double price;
 
     public BaseProduct(String name, Double price) {
         this.name = name;
@@ -13,10 +11,22 @@ public class BaseProduct implements MenuItem {
 
     @Override
     public Double computePrice() {
-        return this.price;
+        return price;
     }
 
+    @Override
     public String getName() {
-        return this.name;
+        return name;
+    }
+
+    @Override
+    public void addItem(MenuItem menuItem) {
+        throw new java.lang.UnsupportedOperationException("This operation is not supported!");
+    }
+
+    @Override
+    public void editItem(MenuItem menuItem) {
+        this.name = menuItem.getName();
+        this.price = menuItem.computePrice();
     }
 }
