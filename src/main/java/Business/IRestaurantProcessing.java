@@ -1,5 +1,8 @@
 package Business;
 
+import javafx.scene.chart.PieChart;
+
+import java.util.DuplicateFormatFlagsException;
 import java.util.List;
 
 public interface IRestaurantProcessing {
@@ -39,4 +42,27 @@ public interface IRestaurantProcessing {
      * @param component components that needs to be edited
      */
     void editMenuItem(MenuItem component, MenuItem newComponent);
+
+    /**
+     * Creates a new order with the next ID, current date and its respective table
+     * @pre menu.size() != 0
+     * @param table The table to which the order is assigned
+     */
+    void createNewOrder(Integer table, List<MenuItem> menu);
+
+    /**
+     * Calculates the price for the given order if it exists
+     * @pre order != null
+     * @param order Order whose price must be calculated
+     * @return The price
+     */
+    Double computePrice(Order order);
+
+    /**
+     * Generates bill for the given order
+     * @pre order != null
+     * @param order Given order for the bill
+     */
+    void generateBill(Order order);
+
 }

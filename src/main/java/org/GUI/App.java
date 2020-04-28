@@ -41,11 +41,22 @@ public class App extends Application {
 
         //restaurant.printMenuItems();
 
-        menuItemList.add(item3);
+        /*menuItemList.add(item3);
 
         restaurant.editMenuItem(item1, item4);
 
-        restaurant.printMenuItems();
+        restaurant.printMenuItems();*/
+
+        MenuItem temp = new CompositeProduct("pizza", menuItemList);
+        List<MenuItem> pla = new ArrayList<>();
+        pla.add(temp);
+
+        restaurant.createNewOrder(1, menuItemList);
+        restaurant.createNewOrder(2, menuItemList);
+        restaurant.createNewOrder(3, pla);
+
+        restaurant.generateBill(restaurant.getOrder(3));
+        restaurant.printOrders();
 
         launch();
     }

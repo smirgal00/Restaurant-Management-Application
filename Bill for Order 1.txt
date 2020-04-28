@@ -1,0 +1,3 @@
+Order ID: 1 28/04/2020 11:54:04 Table No: 1 Price: 25.0
+apa Price: 15.0
+pui Price: 10.0
