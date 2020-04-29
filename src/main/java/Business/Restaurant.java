@@ -1,6 +1,7 @@
 package Business;
 
 import Data.FileWriting;
+import org.GUI.ChefGUI;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -11,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Map.Entry;
 
+@SuppressWarnings("deprecation")
 /**
  * Restaurant class that contains a menu and a map of orders.
  *
@@ -18,11 +20,12 @@ import java.util.Map.Entry;
  * @inv Orders != null
  * @inv orderId >= 0
  */
-public class Restaurant implements IRestaurantProcessing, Serializable {
+public class Restaurant extends Observable implements IRestaurantProcessing, Serializable {
 
     private List<MenuItem> menu;
     private Map<Order, List<MenuItem>> Orders;
     private Integer orderId;
+    private ChefGUI chefGUI;
 
     @SuppressWarnings("ConstantConditions")
     public Restaurant() {
@@ -30,9 +33,18 @@ public class Restaurant implements IRestaurantProcessing, Serializable {
         Orders = new HashMap<>();
         orderId = 0;
 
+        wellformed();
+    }
+
+    private void wellformed() {
         assert menu != null;
         assert Orders != null;
         assert orderId >= 0;
+    }
+
+    private void alert() {
+        setChanged();
+        notifyObservers();
     }
 
     @Override
@@ -96,15 +108,14 @@ public class Restaurant implements IRestaurantProcessing, Serializable {
     @Override
     public void createNewOrder(Integer table, List<MenuItem> menu) {
         assert menu.size() != 0;
-        for(MenuItem menuItem : menu) {
-            assert this.menu.contains(menuItem);
-        }
 
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
         Order order = new Order(++orderId, dateFormat.format(new Date()), table);
 
         Orders.put(order, menu);
+
+        alert();
     }
 
     @Override
@@ -138,10 +149,16 @@ public class Restaurant implements IRestaurantProcessing, Serializable {
 
     }
 
-    public void printMenuItems() {
+    public List<String> printMenuItems() {
+        StringBuilder sb = new StringBuilder();
+        List<String> arr = new ArrayList<>();
         for(MenuItem menuItem : menu) {
-            System.out.println(menuItem.getName() + " Price: " + menuItem.computePrice());
+            sb.delete(0, sb.length());
+            sb.append(menuItem.getName()).append(" Price: ").append(menuItem.computePrice());
+            arr.add(sb.toString());
         }
+
+        return arr;
     }
 
     public Order getOrder(int i) {
@@ -154,22 +171,44 @@ public class Restaurant implements IRestaurantProcessing, Serializable {
         return null;
     }
 
+    public Integer getOrderNumber() {
+        return this.orderId;
+    }
+
     public MenuItem getItem(String name) {
         for(MenuItem menuItem : menu) {
-            if(menuItem.getName().split("\n")[0].equals(name)) {
+            if(menuItem.getName().split(":")[0].equals(name)) {
                 return menuItem;
             }
         }
-
         return null;
     }
 
-    public void printOrders() {
-        for(Entry<Order, List<MenuItem>> entry : Orders.entrySet()) {
-            System.out.println(entry.getKey().tableInfo() + " Price: " + computePrice(entry.getKey()));
-            for(MenuItem menuItem1 : entry.getValue()) {
-                System.out.println(menuItem1.getName() + " " + menuItem1.computePrice());
+    public String getOrderProducts(Order order) {
+        StringBuilder prod = new StringBuilder();
+
+        for(Order order1 : Orders.keySet()) {
+            if(order1.equals(order)) {
+                List<MenuItem> menuItem = Orders.get(order);
+                for(MenuItem mt : menuItem) {
+                    prod.append(mt.getName().split("\n")[0]).append(" ");
+                }
             }
         }
+
+        return prod.toString();
     }
+
+    public String printOrders() {
+        StringBuilder sb = new StringBuilder();
+        for(Entry<Order, List<MenuItem>> entry : Orders.entrySet()) {
+            sb.append(entry.getKey().tableInfo()).append(" Price: ").append(computePrice(entry.getKey()));
+            for(MenuItem menuItem1 : entry.getValue()) {
+                sb.append(menuItem1.getName()).append(" ").append(menuItem1.computePrice());
+            }
+            sb.append("\n");
+        }
+        return sb.toString();
+    }
+
 }

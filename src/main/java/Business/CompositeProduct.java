@@ -31,7 +31,7 @@ public class CompositeProduct extends MenuItem implements Serializable {
 
     @Override
     public String getName() {
-        StringBuilder name = new StringBuilder(this.name + '\n');
+        StringBuilder name = new StringBuilder(this.name + ": ");
 
         for (MenuItem menuItem : product) {
             name.append(menuItem.getName()).append(", ");

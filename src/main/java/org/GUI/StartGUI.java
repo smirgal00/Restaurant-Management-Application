@@ -12,8 +12,10 @@ public class StartGUI {
     private JButton admin;
     private JButton chef;
     private Restaurant restaurant;
+    private String file;
 
-    public StartGUI(Restaurant restaurant) {
+    public StartGUI(Restaurant restaurant, String file) {
+        this.file = file;
         this.restaurant = restaurant;
         frame = new JFrame();
         waiter = new JButton("Waiter");
@@ -38,11 +40,11 @@ public class StartGUI {
         });
 
         admin.addActionListener(e -> {
-            AdministratorGUI administratorGUI = new AdministratorGUI(restaurant);
+            AdministratorGUI administratorGUI = new AdministratorGUI(restaurant, file);
         });
 
         chef.addActionListener(e -> {
-            ChefGUI chefGUI = new ChefGUI();
+            ChefGUI chefGUI = new ChefGUI(restaurant);
         });
     }
 }
