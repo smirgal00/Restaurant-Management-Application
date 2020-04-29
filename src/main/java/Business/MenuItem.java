@@ -6,4 +6,5 @@ public abstract class MenuItem {
     public abstract String getName();
     public abstract void addItem(MenuItem menuItem);
     public abstract void editItem(MenuItem menuItem);
+    public abstract void setPrice(Double price);
 }

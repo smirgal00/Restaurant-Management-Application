@@ -1,8 +1,9 @@
 package Business;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Order {
+public class Order implements Serializable {
     private Integer ID;
     private String date;
     private Integer table;

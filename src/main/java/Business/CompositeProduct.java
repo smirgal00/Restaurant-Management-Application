@@ -1,9 +1,10 @@
 package Business;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CompositeProduct extends MenuItem {
+public class CompositeProduct extends MenuItem implements Serializable {
     private final String name;
     private List<MenuItem> product;
 
@@ -43,6 +44,12 @@ public class CompositeProduct extends MenuItem {
 
     @Override
     public void addItem(MenuItem menuItem) {
+        for(MenuItem menuItem1 : product) {
+            if(menuItem1.getName().equals(menuItem.getName())) {
+                menuItem1.setPrice(menuItem.computePrice());
+                return;
+            }
+        }
         if(!product.contains(menuItem)) {
             product.add(menuItem);
         }
@@ -55,5 +62,10 @@ public class CompositeProduct extends MenuItem {
                 menuItem1.editItem(menuItem);
             }
         }
+    }
+
+    @Override
+    public void setPrice(Double price) {
+        throw new java.lang.UnsupportedOperationException("This operation is not supported!");
     }
 }

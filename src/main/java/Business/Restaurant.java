@@ -5,26 +5,39 @@ import Data.FileWriting;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Map.Entry;
 
-public class Restaurant implements IRestaurantProcessing {
+/**
+ * Restaurant class that contains a menu and a map of orders.
+ *
+ * @inv menu != null
+ * @inv Orders != null
+ * @inv orderId >= 0
+ */
+public class Restaurant implements IRestaurantProcessing, Serializable {
 
     private List<MenuItem> menu;
     private Map<Order, List<MenuItem>> Orders;
     private Integer orderId;
 
+    @SuppressWarnings("ConstantConditions")
     public Restaurant() {
         menu = new ArrayList<>();
         Orders = new HashMap<>();
         orderId = 0;
+
+        assert menu != null;
+        assert Orders != null;
+        assert orderId >= 0;
     }
 
     @Override
     public void createItem(List<MenuItem> components, String name) {
-        assert components.size() != 0 : "The list of components is empty! Function: createItem from Restaurant class";
+        assert components.size() != 0;
         assert name != null;
 
         int size = menu.size();
@@ -48,9 +61,9 @@ public class Restaurant implements IRestaurantProcessing {
 
         while(iterator.hasNext()) {
             MenuItem menuItem = iterator.next();
-
-            if(menuItem.getName().equals(name)) {
-                menu.remove(menuItem);
+            String[] temp = menuItem.getName().split("\n");
+            if(temp[0].equals(name)) {
+                iterator.remove();
             }
         }
     }
@@ -61,7 +74,7 @@ public class Restaurant implements IRestaurantProcessing {
         assert name != null;
 
         for(MenuItem menuItem : menu) {
-            String[] split= menuItem.getName().split("\n");
+            String[] split = menuItem.getName().split("\n");
             if(split[0].equals(name)) {
                 for(MenuItem comp : components) {
                     menuItem.addItem(comp);
@@ -83,6 +96,9 @@ public class Restaurant implements IRestaurantProcessing {
     @Override
     public void createNewOrder(Integer table, List<MenuItem> menu) {
         assert menu.size() != 0;
+        for(MenuItem menuItem : menu) {
+            assert this.menu.contains(menuItem);
+        }
 
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
@@ -132,6 +148,16 @@ public class Restaurant implements IRestaurantProcessing {
         for(Order order : Orders.keySet()) {
             if(order.getID() == i) {
                 return order;
+            }
+        }
+
+        return null;
+    }
+
+    public MenuItem getItem(String name) {
+        for(MenuItem menuItem : menu) {
+            if(menuItem.getName().split("\n")[0].equals(name)) {
+                return menuItem;
             }
         }
 

@@ -1,6 +1,8 @@
 package Business;
 
-public class BaseProduct extends MenuItem {
+import java.io.Serializable;
+
+public class BaseProduct extends MenuItem implements Serializable {
     private String name;
     private Double price;
 
@@ -28,5 +30,10 @@ public class BaseProduct extends MenuItem {
     public void editItem(MenuItem menuItem) {
         this.name = menuItem.getName();
         this.price = menuItem.computePrice();
+    }
+
+    @Override
+    public void setPrice(Double price) {
+        this.price = price;
     }
 }

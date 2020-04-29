@@ -1,64 +1,46 @@
 package org.GUI;
 
 import Business.*;
-import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
+import Data.Serializer;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReferenceArray;
 
 /**
  * Main class for executing the application
  */
 
-public class App extends Application {
-
-    private static Scene scene;
-
-    @Override
-    public void start(Stage stage) throws IOException {
-        stage.setTitle("Restaurant!");
-        stage.setScene(scene);
-        stage.show();
-    }
+public class App {
 
     public static void main(String[] args) {
 
         Restaurant restaurant = new Restaurant();
-        MenuItem item1 = new BaseProduct("apa", 15.0);
-        MenuItem item2 = new BaseProduct("pui", 10.0);
-        MenuItem item3 = new BaseProduct("pula", 1.0);
-        MenuItem item4 = new BaseProduct("apa", 10.0);
+        Serializer ser = new Serializer("restaurant");
 
-        List<MenuItem> menuItemList = new ArrayList<>();
-        menuItemList.add(item1);
-        menuItemList.add(item2);
+       /* MenuItem item1 = new BaseProduct("caine", 13.0);
+        MenuItem item2 = new BaseProduct("sad", 1.2);
 
-        restaurant.createItem(menuItemList, "Ciorba de pui");
-        restaurant.createItem(menuItemList, "Ciorba");
+        MenuItem item3 = new BaseProduct("caine", 13.0);
+        MenuItem item4 = new BaseProduct("sad", 1.2);
 
-        //restaurant.printMenuItems();
+        List<MenuItem> menu = new ArrayList<>();
+        menu.add(item1);
+        menu.add(item2);
 
-        /*menuItemList.add(item3);
+        restaurant.createItem(menu, "Pula");
+        menu.remove(item1);
+        menu.remove(item2);
+        menu.add(item3);
+        menu.add(item4);
+        restaurant.createItem(menu, "Rusu");*/
 
-        restaurant.editMenuItem(item1, item4);
+        restaurant = ser.deserializeInfo();
+        restaurant.printMenuItems();
 
-        restaurant.printMenuItems();*/
+        StartGUI startGUI = new StartGUI(restaurant);
 
-        MenuItem temp = new CompositeProduct("pizza", menuItemList);
-        List<MenuItem> pla = new ArrayList<>();
-        pla.add(temp);
 
-        restaurant.createNewOrder(1, menuItemList);
-        restaurant.createNewOrder(2, menuItemList);
-        restaurant.createNewOrder(3, pla);
-
-        restaurant.generateBill(restaurant.getOrder(3));
-        restaurant.printOrders();
-
-        launch();
     }
 
 }
