@@ -27,6 +27,7 @@ public class StartGUI {
         frame.add(admin);
         frame.add(chef);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLocationRelativeTo(null);
         frame.setSize(800, 720);
         frame.setResizable(false);
         frame.setVisible(true);

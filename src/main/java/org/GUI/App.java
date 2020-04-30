@@ -15,10 +15,10 @@ public class App {
     public static void main(String[] args) {
 
         Restaurant restaurant = null;
-        Serializer ser = new Serializer(args[0]);
+        Serializer ser = new Serializer(args[0] + ".ser");
 
         restaurant = ser.deserializeInfo();
-        StartGUI startGUI = new StartGUI(restaurant, args[0]);
+        StartGUI startGUI = new StartGUI(restaurant, args[0] + ".ser");
         ChefGUI chefGUI = new ChefGUI(restaurant);
         restaurant.addObserver(chefGUI);
 

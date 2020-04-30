@@ -22,6 +22,7 @@ public class ChefGUI implements Observer {
         orders.setEditable(false);
         frame.setLayout(new GridLayout(2, 1));
         text.setEditable(false);
+        frame.setLocationRelativeTo(null);
         frame.add(text);
         frame.add(orders);
         frame.setSize(800, 720);

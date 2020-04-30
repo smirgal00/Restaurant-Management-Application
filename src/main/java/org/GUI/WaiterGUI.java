@@ -35,7 +35,7 @@ public class WaiterGUI {
         setJTable();
         frame.add(info);
 
-
+        frame.setLocationRelativeTo(null);
         frame.setSize(800, 720);
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

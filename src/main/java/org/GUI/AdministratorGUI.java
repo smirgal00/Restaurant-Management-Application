@@ -45,6 +45,7 @@ public class AdministratorGUI {
         viewItemListener();
         saveListener();
 
+        frame.setLocationRelativeTo(null);
         frame.setLayout(new GridLayout(2, 3));
         frame.add(add);
         frame.add(editComponent);
