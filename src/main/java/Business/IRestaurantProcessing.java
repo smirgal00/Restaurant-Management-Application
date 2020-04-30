@@ -37,6 +37,7 @@ public interface IRestaurantProcessing {
      * @pre component != null
      * @pre newComponent != null
      * @param component components that needs to be edited
+     * @param newComponent Component containing the new values
      */
     void editMenuItem(MenuItem component, MenuItem newComponent);
 
@@ -44,6 +45,7 @@ public interface IRestaurantProcessing {
      * Creates a new order with the next ID, current date and its respective table
      * @pre menu.size() != 0
      * @param table The table to which the order is assigned
+     * @param menu Items associated with this order
      */
     void createNewOrder(Integer table, List<MenuItem> menu);
 
