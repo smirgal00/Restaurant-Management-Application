@@ -64,14 +64,15 @@ public class AdministratorGUI {
         add.addActionListener(e -> {
             String input = JOptionPane.showInputDialog("Enter menu item details!"); //nume pret ... Nume produs
             if(input != null) {
-                String[] values = input.split(" ");
+                String[] name = input.split(";");
+                String[] values = name[0].split(" ");
                 List<MenuItem> menu = new ArrayList<>();
 
                 for(int i = 0; i < values.length - 1; i += 2) {
                     menu.add(new BaseProduct(values[i], Double.parseDouble(values[i + 1])));
                 }
 
-                restaurant.createItem(menu, values[values.length - 1]);
+                restaurant.createItem(menu, name[1]);
             }
         });
     }

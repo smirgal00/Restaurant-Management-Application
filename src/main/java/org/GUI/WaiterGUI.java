@@ -46,10 +46,11 @@ public class WaiterGUI {
         add.addActionListener(e -> {
             String input = JOptionPane.showInputDialog("Enter order information");
             if (input != null) {
-                String[] values = input.split(" ");
+                String[] name = input.split(";");
+                String[] values = name[0].split(" ");
                 List<MenuItem> menuItemList = new ArrayList<>();
-                for (int i = 1; i < values.length; i++) {
-                    menuItemList.add(restaurant.getItem(values[i]));
+                for (int i = 1; i < name.length; i++) {
+                    menuItemList.add(restaurant.getItem(name[i]));
                 }
                 restaurant.createNewOrder(Integer.parseInt(values[0]), menuItemList);
             }

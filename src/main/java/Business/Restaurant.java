@@ -73,7 +73,7 @@ public class Restaurant extends Observable implements IRestaurantProcessing, Ser
 
         while(iterator.hasNext()) {
             MenuItem menuItem = iterator.next();
-            String[] temp = menuItem.getName().split("\n");
+            String[] temp = menuItem.getName().split(":");
             if(temp[0].equals(name)) {
                 iterator.remove();
             }
