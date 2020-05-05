@@ -90,14 +90,15 @@ public class AdministratorGUI {
         editList.addActionListener(e -> {
             String input = JOptionPane.showInputDialog("Enter menu item details!"); //nume pret ... Nume produs
             if(input != null) {
-                String[] values = input.split(" ");
+                String[] values = input.split(";");
+                String[] name = values[0].split(" ");
                 List<MenuItem> menu = new ArrayList<>();
 
-                for(int i = 0; i < values.length - 1; i += 2) {
-                    menu.add(new BaseProduct(values[i], Double.parseDouble(values[i + 1])));
+                for(int i = 0; i < name.length - 1; i += 2) {
+                    menu.add(new BaseProduct(name[i], Double.parseDouble(name[i + 1])));
                 }
 
-                restaurant.editMenuItem(menu, values[values.length - 1]);
+                restaurant.editMenuItem(menu, values[1]);
             }
         });
     }

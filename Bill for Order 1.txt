@@ -1,3 +1,2 @@
-Order ID: 1 29/04/2020 15:35:02 Table No: 1 Price: 14.2
-Rusu
-caine, sad Price: 14.2
+Order ID: 1 05/05/2020 09:37:30 Table No: 1 Price: 9.0
+Mix Salata: rosii, salata, castraveti Price: 9.0

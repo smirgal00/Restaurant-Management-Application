@@ -86,7 +86,7 @@ public class Restaurant extends Observable implements IRestaurantProcessing, Ser
         assert name != null;
 
         for(MenuItem menuItem : menu) {
-            String[] split = menuItem.getName().split("\n");
+            String[] split = menuItem.getName().split(":");
             if(split[0].equals(name)) {
                 for(MenuItem comp : components) {
                     menuItem.addItem(comp);
